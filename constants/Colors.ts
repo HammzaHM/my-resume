@@ -14,6 +14,8 @@ export const Colors = {
     icon: "#687076",
     tabIconDefault: "#687076",
     tabIconSelected: tintColorLight,
+    mainImageBackgroundColor: "#EDF7FA",
+    downloadResume: "#FF6464",
   },
   dark: {
     text: "#ECEDEE",
