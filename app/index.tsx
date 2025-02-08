@@ -1,6 +1,7 @@
 import { HoverableButtonLink } from "@/components/ui/HoverableButtonLink";
 import { Image } from "expo-image";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { openURL } from "expo-linking";
 
 import { DownloadResumeButton } from "@/components/DownloadResumeButton";
 import { HelloWave } from "@/components/HelloWave";
@@ -9,6 +10,16 @@ import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import { Images } from "@/constants/Images";
 import { Ionicons } from "@expo/vector-icons";
+import { useRef } from "react";
+
+const SOCIAL_ACCOUNTS = ["twitter", "linkedin", "github", "gitlab"];
+
+const keyedLinks = {
+  twitter: "https://x.com/hmem_hamza",
+  linkedin: "https://linkedin.com/in/hamza-hmem-dev",
+  github: "https://github.com/HammzaHM",
+  gitlab: "https://gitlab.com/hamzaDeveloper",
+};
 
 const Header = () => (
   <ThemedView style={styles.header} lightColor="#FFFFFF" darkColor="#FFFFFF">
@@ -26,9 +37,17 @@ const Header = () => (
         columnGap: 20,
       }}
     >
-      <HoverableButtonLink path="/_contact-me" text="Works" />
-      <HoverableButtonLink path="/blog" text="Blog" />
-      <HoverableButtonLink path="/_contact-me" text="Let‘s Connect!" />
+      {/* <HoverableButtonLink path="/_contact-me" text="Works" /> */}
+      <HoverableButtonLink
+        path="https://dev.to/hmem_hamza"
+        text="Blog"
+        isBlankLink
+      />
+      <HoverableButtonLink
+        path="mailto:hmemm.hamza1@gmail.com"
+        text="Let‘s Connect!"
+        isBlankLink
+      />
     </ThemedView>
   </ThemedView>
 );
@@ -88,12 +107,26 @@ export default function HomeScreen() {
             gap: 30,
           }}
         >
-          {["twitter", "linkedin", "github"].map((value, index) => (
-            <Ionicons
-              name={`logo-${value}` as any}
-              key={"KEY_" + index + value}
-              size={30}
-            />
+          {SOCIAL_ACCOUNTS.map((value, index) => (
+            <Pressable
+              onPress={() => {
+                if (window) {
+                  window.open(keyedLinks?.[value], "_blank");
+                  return;
+                }
+
+                openURL(keyedLinks?.[value]);
+              }}
+              onHoverIn={() => {
+                //TODO: Implement hover effect here.
+              }}
+            >
+              <Ionicons
+                name={`logo-${value}` as any}
+                key={"KEY_" + index + value}
+                size={30}
+              />
+            </Pressable>
           ))}
         </View>
         <ThemedText lightColor="#000000" darkColor="#000000">

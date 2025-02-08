@@ -23,7 +23,9 @@ export const DownloadResumeButton = () => {
 
   return (
     <Pressable style={styles.button} onPress={openPdf}>
-      <ThemedText>Download my resume</ThemedText>
+      <ThemedText style={{ color: Colors.dark.text }}>
+        Download my resume
+      </ThemedText>
     </Pressable>
   );
 };

@@ -8,18 +8,24 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { ExternalPathString, Link, RelativePathString } from "expo-router";
+import {
+  ExternalPathString,
+  Href,
+  Link,
+  RelativePathString,
+} from "expo-router";
 
 type Props = {
-  path: RelativePathString | ExternalPathString | string;
+  path: Href;
   text: string;
+  isBlankLink?: boolean;
 };
 
 const colorAnimation = (animValue: SharedValue<number>) => {
   return interpolate(animValue.value, [0, 1], [255, 0]);
 };
 
-export const HoverableButtonLink = ({ path, text }: Props) => {
+export const HoverableButtonLink = ({ path, text, isBlankLink }: Props) => {
   const animValue = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -54,7 +60,7 @@ export const HoverableButtonLink = ({ path, text }: Props) => {
         });
       }}
     >
-      <Link href={path}>
+      <Link href={path} target={isBlankLink ? "_blank" : undefined}>
         <Animated.Text style={animatedStyle}>{text}</Animated.Text>
       </Link>
     </Pressable>
