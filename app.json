@@ -22,7 +22,7 @@
       "output": "static",
       "name": "Hamza Hmem",
       "themeColor": "#FFFFFF",
-      "favicon": "./assets/images/my_website_logo.ico"
+      "favicon": "./assets/images/hamza_website_logo.jpg"
     },
     "plugins": [
       "expo-router",
