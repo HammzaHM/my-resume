@@ -1,6 +1,13 @@
 import { HoverableButtonLink } from "@/components/ui/HoverableButtonLink";
 import { Image } from "expo-image";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import {
+  LayoutAnimation,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { openURL } from "expo-linking";
 
 import { DownloadResumeButton } from "@/components/DownloadResumeButton";
@@ -10,7 +17,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import { Images } from "@/constants/Images";
 import { Ionicons } from "@expo/vector-icons";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const SOCIAL_ACCOUNTS = ["twitter", "linkedin", "github", "gitlab"];
 
@@ -52,18 +59,37 @@ const Header = () => (
   </ThemedView>
 );
 
+const BASE_PHONE_WIDTH = 768;
+
 export default function HomeScreen() {
+  const { width, height } = useWindowDimensions();
+
+  const isMobile = width < 768;
+
   return (
     <ThemedView style={{ flex: 1, backgroundColor: Colors.light.background }}>
       <Header />
       <ScrollView style={{ flex: 1 }}>
-        <ThemedView style={styles.detailsContainer} darkColor="#fff">
-          <View style={{ padding: 20, maxWidth: "30%", flex: 1 }}>
+        <ThemedView
+          style={[
+            styles.detailsContainer,
+            isMobile && { flexDirection: "column-reverse" },
+          ]}
+          darkColor="#fff"
+        >
+          <View
+            style={{
+              padding: 20,
+              maxWidth: isMobile ? "100%" : "30%",
+              paddingTop: isMobile ? height / 3 : 20,
+              flex: 1,
+            }}
+          >
             <ThemedText
               style={{
                 color: Colors.light.text,
                 fontWeight: "bold",
-                fontSize: 44,
+                fontSize: isMobile ? 30 : 44,
                 lineHeight: 60,
                 fontFamily: "Heebo_700Bold",
                 marginBottom: 20,
@@ -71,7 +97,10 @@ export default function HomeScreen() {
             >
               Hi, I‘m Hamza Hmem, {"\n"}Senior Mobile Engineer {"\n"}
             </ThemedText>
-            <ThemedText type="subtitle" style={styles.bio}>
+            <ThemedText
+              type="subtitle"
+              style={[styles.bio, { fontSize: isMobile ? 14 : 17.5 }]}
+            >
               With a 5+ years of experience in Mobile development industry, I am
               pretty confident in my skills to convert any dream or idea into a
               real, user-friendly and scalable mobile application. Throughout my

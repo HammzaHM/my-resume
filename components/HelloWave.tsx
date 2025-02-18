@@ -16,10 +16,7 @@ export function HelloWave() {
 
   useEffect(() => {
     rotationAnimation.value = withRepeat(
-      withSequence(
-        withTiming(30, { duration: 1000, easing: Easing.ease }),
-        withTiming(0, { duration: 1000, easing: Easing.ease })
-      ),
+      withTiming(30, { duration: 1000, easing: Easing.ease }),
       -1,
       true // Run the animation 4 times
     );
